@@ -19,22 +19,55 @@ Before installing this package, make sure the following dependencies are pre-ins
 
 ## How to Use
 
-Define which IAudioLoader will be used to load audios.
+1. Define which implementation of ```IAudioLoader``` will be used to load audio files in your project.
+
+a. Addressables
+
+Use the ```AddressablesAudioLoader``` to load audio files via Unity's Addressables system.
+
 ```csharp
 AudioManager.Instance.SetAudioLoader (new AddressablesAudioLoader ());
 ```
 
-Play an audio.
+b. Resources
+
+To use the ```ResourcesAudioLoader```, make sure the audio files are located inside a Resources folder in your project.
+Here’s an example folder structure:
+
+```
+Assets/
+└── Resources/
+    ├── Click.wav
+    └── Music.wav 
+```
+
+Then, set the audio loader as follows:
+
+```csharp
+AudioManager.Instance.SetAudioLoader (new ResourcesAudioLoader ());
+```
+
+c. Scene
+
+To use the ```SceneAudioLoader```, you need to have a ```SceneAudioGroup``` configured in the scenes of your project. This component should manage the audio clips specific to each scene.
+
+```csharp
+AudioManager.Instance.SetAudioLoader (new SceneAudioLoader ());
+```
+
+2. Play an audio.
+
+a. Using only the audio path.
 ```csharp
 AudioManager.Instance.PlayAudio ("audio_path");
 ```
 
-Play an audio with optional parameters.
+b. With optional parameters.
 ```csharp
 AudioManager.Instance.PlayAudio ("audio_path", volume: 1F,  loop: true);
 ```
 
-Use an AudioProfile to play an audio.
+c. With an AudioProfile to play an audio.
 ```csharp
 AudioProfile myAudioProfile = new AudioProfile ()
 {
